@@ -40,8 +40,8 @@ SELECT
                 ELSE ';'
             END
         WHEN a.data_type <> b.data_type
-          OR COALESCE(a.character_maximum_length, 0)
-             <> COALESCE(b.character_maximum_length, 0)
+          OR COALESCE(a.character_maximum_length, -1)
+             <> COALESCE(b.character_maximum_length, -1)
         THEN
             'ALTER TABLE schema_b.' || a.table_name ||
             ' ALTER COLUMN ' || a.column_name ||
@@ -69,8 +69,8 @@ JOIN common_tables t
 WHERE
        b.column_name IS NULL
     OR a.data_type <> b.data_type
-    OR COALESCE(a.character_maximum_length, 0)
-       <> COALESCE(b.character_maximum_length, 0)
+    OR COALESCE(a.character_maximum_length, -1)
+       <> COALESCE(b.character_maximum_length, -1)
     OR a.is_nullable <> b.is_nullable
 ORDER BY
     a.table_name,
